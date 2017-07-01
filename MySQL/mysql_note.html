@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <title>MySQL_note</title>
+  </head>
+  <body>
+    <h1>MySQLノート</h1>
+    <ol>
+      <li>概要</li>
+      <ul>
+        <strong>大まかに</strong>
+        <li><br>データベース（スプレッドシード）</li>
+        <ul>
+          <li>テーブル(その中のシート)</li>
+          <ul>
+            <li>フィールド（列）</li>
+            <li>レコード（行）</li>
+          </ul>
+        </ul>
+        <strong>と分けられる</strong>
+      </ul>
+      <li>MySQLの起動、各種設定</li>
+      <ul>
+        <li>mysql -u root  ・・・・・・rootの権限で起動する。パスワードがあるときは-pオプションをつける</li>
+        <li>set password for root@localhost=password('xxxxxxx');・・・・・パスワードを設定する</li>
+        <li>exit;・・・・・・・・・・・・・・・・・ログアウトをする。;を忘れない</li>
+        <li>create database データベースの名前; ・・・・・・データベースを作る</li>
+        <li>show databeses;・・・・・・・・・・・・・・・データベースを見る（複数形に注意）</li>
+        <li>drop database 名前;・・・・・・・・・・・データベースを削除</li>
+        <li>use 名前;・・・・・・・・・・・・・・・・・・・・・・・データベースを切り替える</li>
+        <li>grant all on ｄｂ名前.* to username@localhost identified by 'pass';・・・・・・db名前の下のものすべてに対してusernameのユーザーネームで、passというパスワードで設定する</li>
+      </ul>
+      <li>テーブル</li>
+      <ul>
+        <li>create table user (
+          <br>id int　not null auto_increment primary key,             ・・・・フィールド名とデータ型を記入,not nullは入力必須にすること。自動で順番に振ってくれる（自動連番）。索引機能（主キー）
+          <br>name varchar(255),　・・・・emailを２５５字までかける
+          <br>email varchar(255)　unique, ・・・・・・・ユニークキー（同じものが二つ入るとエラー）
+          <br>password char(32),
+          <br>score double,
+          <br>sex enum('male', 'female')　default 'mail',・・・・・・・・最初はmailを入れておく
+          <br>memo text,
+          <br>created datetime,
+          <br>key score (score)
+          <br>);</li>
+          <li>show tables;・・・・・・・・・・テーブルの中身を確認する</li>
+          <li>drop table users;・・・・・テーブルを削除する</li>
+          <li>desc テーブル名;・・・・・・・・詳しく中身を見る</li>
+      </ul>
+      <li>データ型</li>
+      <ul>
+        <li>数字</li>
+        <ul>
+          <li>int</li>
+          <li>double</li>
+        </ul>
+        <li>文字列</li>
+        <ul>
+          <li>char（数字）・・・・・・文字数が確定しているとき</li>
+          <li>varchar(数字)・・・文字数がアバウトで設定</li>
+          <li>text・・・・・・・・・・・・・文字数を設定しない</li>
+        </ul>
+        <li>日付</li>
+        <ul>
+          <li>date</li>
+          <li>datetime</li>
+        </ul>
+        <li>それ以外</li>
+        <ul>
+          <li>enum・・・・・・・もともと選択肢が決まっているもの</li>
+        </ul>
+      </ul>
+      <li>レコード</li>
+      <ul>
+        <li>insert into users (name,email,password,score,sex,memo,created) values
+        <br>('taguchi','taguchi@mail.com','xxx',5.5,'memomemo','2012-6-12 11:00:00');・・・・レコードの設定。,で区切って複数同時に設定することも可能</li>
+        <li>select * from users;・・・・・・・・・・中身を見る。＊はすべての意味。フィールド指定するときはフィールド名で書く（,区切り）。\Gオプションをつけると縦に並べて表示</li>
+        <li>select * from users where score >= 5.0;・・・・・・・スコアが５以上の人を抽出</li>
+        <li>select * from users where email like '%@dotinstall.com';・・・・・・・・・・likeはあいまい検索。%は任意の文字列。＿は任意の１文字</li>
+        <li>select * from users where score between 5.0 and 8.0;・・・・・・・・・スコアが５～８の間の人を抽出</li>
+        <li>select * from users where team in ('red', 'yellow');・・・・・・・・・teamにredとyellowが入っているものを抽出</li>
+        <li>select * from users where score >= 4.0 and team = 'blue';　・・・・・・・・・・・スコアが４以上teamがblueのものを抽出。nadをorにするともしくは判定</li>
+        <li>select * from users order by score;・・・・・・・・・・・・スコアの小さい順に並べる。最後にdescとすると逆順になる</li>
+        <li>select * from users limit 3;・・・・・・・・・・・・・・・・・・・・３件のみ表示</li>
+        <li>select * from users limit 2, 2;・・・・・・・・・・・・・・・・・３件目から２件表示する</li>
+        <li>select count(*) from users;・・・・・・・・・・・・・・・・・・・・・・レコードの数を数える</li>
+        <li>select distinct team from users;・・・・・・・・・・・・・・・・重複せずに入っているものを表示</li>
+        <li>select max(score) from users;・・・・・・・・・・・・・・・・・・・スコアの最大値を表示する</li>
+        <li>select avg(score) from users;・・・・・・・・・・・・・・・・・・・スコアの平均値を表示する</li>
+        <li>select sum(score) from users;・・・・・・・・・・・・・・・・・・・スコアの合計を表示する</li>
+        <li>select team.avg(score) from users group by team;・・・・・・・グループごとのチームを表示</li>
+        <li>select rand();・・・・・・・・・・・・・・・・ランダムで数値を表示</li>
+        <li>select * from users by rand() limit 1;・・・・・・・・・・・・・ランダムに一人出力する</li>
+        <li>select email,length(email) from users;・・・・・・・・・・・・・emailとその長さを表示する</li>
+        <li>select concat(name,'(',team,')') as label from users;・・・・・・・・・・・・・・・・・・・・文字列を連結する。なおas以降でラベルを設定する</li>
+        <li>select name,substring(team,1,1) from users;・・・・・・・・・・・・・・・・substringはこのときteamの１文字目から１文字目まで表示するように設定してある</li>
+        <li>select name,month(created) from users;・・・・・・・・・・・・・・・・・・・・・・月だけ表示する</li>
+        <li>datediff(now(), created) from users;・・・・・・・・・・・・・・・・・・・・・・・・今から作られた日付までの差分を表示（作られてから何日目かを表示する）</li>
+        <li>update users set email = 'xxxxx00000.jp' where id =5;・・・・・・idが５の人のemailをxxxx0000.jpに変更する</li>
+        <li>delete from users where score <= 3.0;・・・・・・・・・・・・・・・・・・・・・スコアが３点以下の人を削除</li>
+        <li>alter table users add full_name varchar(255) after name;・・・・・・・nameのあとにfull_nameが入る</li>
+        <li>alter tabel users change full_name full_name varchar(100);・・・・・full_nameの文字数を１００に変える</li>
+        <li>alter table users drop full_name;・・・・・・・・・・・・・full_nameを削除する</li>
+        <li>alter table users add index email (email);・・・emailに索引をつける</li>
+        <li>alter table users drop index email;・・・・・・・・・・・索引を削除する</li>
+        <li>alter table users rename users2;・・・・・・・・・・・・・・テーブル名のusersをusers2に変更する</li>
+      </ul>
+    </ol>
+  </body>
+</html>

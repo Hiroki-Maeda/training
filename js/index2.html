@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>jsの練習２</title>
+  </head>
+  <body>
+    <section>
+      <form id="form" action="#">
+        <input type="text" name="word">
+        <input type="submit" value="kensaku!">
+        <p id="output"></p>
+      </form>
+      <p id="zeropl"></p>
+    </section>
+    <section>
+      <p>今の日時は：<span id="date"></span></p>
+    </section>
+    <script>
+      document.getElementById('form').onsubmit = function() {
+        console.log('kensakusimasita');
+      };
+      document.getElementById('form').onsubmit = function(){
+
+      var serch = document.getElementById("form").word.value;
+      document.getElementById("output").textContent = '「'+serch+'」を検索しました';
+      return false;
+    }
+    var now = new Date();
+    var year = now.getFullYear();
+    var month = now.getMonth();
+    var date = now.getDate();
+    var hour = now.getHours();
+    var min = now.getMinutes();
+    var outputdate = year+'/'+(month+1)+'/'+date+'/'+hour+'/'+min;
+    document.getElementById('date').textContent = outputdate;
+
+    var addzero = function(a,b){
+      var zeroplus = a;
+      while(zeroplus.length < b){
+        zeroplus = '0' + zeroplus;
+      }
+      return zeroplus;
+    }
+var zeronai = 1;
+var keta = 3;
+document.getElementById('zeropl').textContent = addzero(zeronai,keta);
+    </script>
+  </body>
+</html>

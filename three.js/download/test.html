@@ -1,0 +1,21 @@
+<!doctype html>
+<html>
+<head>
+</head>
+<body>
+<script src="js/three.min.js"></script>
+<script>
+var width, height, renderer;
+init();
+function init() {
+	"use strict";
+	width = 400;
+	height = 400;
+	renderer = new THREE.WebGLRenderer({antialias:true});
+	renderer.setSize(width, height);
+	document.body.appendChild(renderer.domElement);
+	renderer.setClearColor(0xFFFFFF, 1.0);
+}
+</script>
+</body>
+</html>

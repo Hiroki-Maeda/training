@@ -1,0 +1,99 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="x-ua-compatible" content="IE=edge">
+<title>2-04_html</title>
+<link href="../../_common/css/style.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<header>
+<div class="header-contents">
+<h1>HTMLを書き換える</h1>
+<h2>要素を取得する</h2>
+</div><!-- /.header-contents -->
+</header>
+<div class="main-wrapper">
+<section>
+	<p id="choice">ここに日時を表示します</p>
+	<p id="zeikin"></p>
+	<ul id="list">
+	</ul>
+	<form class="" action="index.html" method="post">
+
+	<input type="submit" value="検索">
+</form>
+</section>
+</div><!-- /.main-wrapper -->
+<footer>JavaScript Samples</footer>
+<script>
+var num = Math.floor(Math.random()*6);
+var ans = parseInt(window.prompt('数を当てる１～５'));
+if(ans<num){
+	console.log('tiisai');
+}else if(ans===num){
+	console.log('atari');
+}else{
+	console.log('oki');
+}
+console.log(ans);
+console.log(num);
+var hour =  new Date().getHours();
+console.log(hour);
+if(hour === 17&&19){
+	window.alert('17時か19時です');
+}else if(hour === 18){
+	window.alert('18時です');
+}else{
+	window.alert('20時～16時です');
+}
+var enemy = 300
+var dame = 0;
+var caunt = 0;
+while(enemy > 0){
+	dame = Math.floor(Math.random()*31);
+	enemy -= dame;
+	console.log('enemyに'+dame+'のダメージ,残り'+enemy);
+	caunt++;
+}
+window.alert('たおした！');
+document.getElementById('choice').textContent = 'たおした！合計'+caunt+'回の攻撃';
+var zei = function(kin){
+	var tax=0.08;
+	return kin + kin*tax;
+}
+var kingaku = parseInt(window.prompt('金額'));
+document.getElementById('zeikin').textContent = 'コーヒーメーカーの値段は'+ zei(kingaku) + 'です';
+
+var todolist = function(word){
+	var li = document.createElement('li');
+	li.textContent = word;
+	document.getElementById('list').appendChild(li);
+}
+var todo = ['1tume','2tume','3tume','4tume'];
+var i = 0;
+var todolisttry = function(){
+for(i=0;i!=todo.length;i++){
+todolist(todo[i]);
+}
+}
+var pushlist = window.prompt('todolist');
+todo.push(pushlist);
+todolisttry();
+console.dir(window);
+var jsbook = {title:'hon', price: 1000, etc: 'biginer'};
+console.log(jsbook);
+console.log(jsbook.title);
+console.log(jsbook['price']);
+
+for(var p in jsbook){
+	console.log(p = jsbook[p]);
+}
+
+
+
+
+</script>
+</body>
+</html>
